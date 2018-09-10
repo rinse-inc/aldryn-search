@@ -13,10 +13,14 @@ class AbstractIndex(indexes.SearchIndex):
     text = indexes.CharField(document=True, use_template=False)
 
     def _get_backend(self, using):
+        return self.get_backend(using)
+
+    def get_backend(self, using=None):
         """
         We set the backend to allow easy access for things like document search.
         """
-        self._backend = super(AbstractIndex, self)._get_backend(using)
+        self._backend = super(AbstractIndex, self).get_backend(using)
+
         self._backend_alias = using
         return self._backend
 
